@@ -1,0 +1,101 @@
+# ============================================
+# NewsPulse 仓库忽略规则
+# 分三块：通用 / 前端(Vue+Vite) / 后端(Python+FastAPI)
+# ============================================
+
+# ---------- 操作系统与编辑器 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# ---------- 环境变量与密钥（禁止入库 / U9-d） ----------
+.env
+.env.*
+!.env.example
+!**/.env.example
+!*.env.example
+*.pem
+*.key
+*.p12
+
+# ---------- 日志与临时文件 ----------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+tmp/
+temp/
+
+# ============================================
+# 前端：fronted/（Vue 3 + Vite 7 + Vant）
+# ============================================
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/node_modules/.vite/
+coverage/
+*.local
+.eslintcache
+.tsbuildinfo
+
+# 前端环境变量文件（Vite 中 VITE_ 前缀变量会被打包进产物，等同公开）
+frontend/.env.*.local
+
+# ---------- 含真实密钥的配置源码（U9-d 红线：修复前禁止入库） ----------
+# 2026-10-20：frontend/src/config/api.js 已改造为 import.meta.env 读取，
+# 不再硬编码密钥，因此该文件恢复入库。下方规则保留作历史记录与防回退。
+# frontend/src/config/api.js
+
+# ============================================
+# 后端：backend/（Python + FastAPI）
+# ============================================
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 测试与类型检查缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# 数据库本地文件（db/database.sql 是设计脚本要入库，本地 SQLite 实例文件不入库）
+*.db
+*.sqlite
+*.sqlite3
+backend/app.db
+
+# 上传与运行时产物
+uploads/
+backend/media/
+backend/staticfiles/
