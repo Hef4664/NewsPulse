@@ -1,0 +1,22 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "NewsPulse 新闻资讯后端服务（FastAPI + SQLAlchemy 异步 + MySQL + Redis）"
+readme = "README.md"
+authors = [
+    { name = "Hef4664", email = "3284312038@qq.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "aiomysql>=0.3.2",
+    "fastapi>=0.150.0",
+    "pwdlib[bcrypt]>=0.3.1",
+    "pydantic-settings>=2.16.0",
+    "redis>=8.1.0",
+    "sqlalchemy[asyncio]>=2.1.5",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
