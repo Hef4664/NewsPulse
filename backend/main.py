@@ -7,6 +7,9 @@ NewsPulse 后端服务入口。
 
 from fastapi import FastAPI
 
+#导入获取新闻分类的路由
+from backend.routers.news import router as news_router
+
 # 创建 FastAPI 应用实例。
 # title / version 会直接体现在自动生成的接口文档（/docs）页面上。
 app = FastAPI(
@@ -34,3 +37,7 @@ async def health() -> dict[str, str]:
         固定返回 status=ok，后续可在此接入数据库 / Redis 连通性检查。
     """
     return {"status": "ok"}
+
+
+#挂载获取新闻分类的路由
+app.include_router(news_router)
