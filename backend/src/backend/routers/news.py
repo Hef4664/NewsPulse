@@ -3,6 +3,7 @@ from backend.config.db_conf import get_db
 from fastapi import APIRouter, Depends
 
 from backend.crud import news 
+from fastapi.params import Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 #创建APIRouter实例
@@ -26,4 +27,29 @@ async def get_categories(skip: int = 0, limit: int = 10, db: AsyncSession=Depend
         "message": "获取分类成功",
         "data": categories
                 
+    }
+#创建获取新闻列表的路由
+@router.get("/list")
+async def get_news_list(
+    category_id: int =Query(..., description="新闻分类ID",alias="categoryId"),
+    page: int=1,
+    page_size: int=Query(10, description="每页数量",alias="pageSize"),
+    db: AsyncSession=Depends(get_db)
+):
+    #处理分页规则
+    offset = (page - 1) * page_size
+    #调用crud中的get_news_list方法获取新闻列表
+    news_list = await news.get_news_list(db, category_id, offset, page_size)
+    #调用crud中的get_news_count方法获取新闻总数
+    total = await news.get_news_count(db, category_id)
+    #跳过的新闻数量+当前获取的是否小于新闻总数,判断是否有更多新闻
+    has_more = (offset + len(news_list)) < total
+    return{
+        "code": 200,
+        "message":"获取新闻列表成功",
+        "data": {
+            "list":news_list,
+            "total":total,
+            "hasmore": has_more
+        }
     }
