@@ -10,12 +10,26 @@ from fastapi import FastAPI
 #导入获取新闻分类的路由
 from backend.routers.news import router as news_router
 
+#导入CORS中间件,解决跨域问题
+from fastapi.middleware.cors import CORSMiddleware
+
 # 创建 FastAPI 应用实例。
 # title / version 会直接体现在自动生成的接口文档（/docs）页面上。
 app = FastAPI(
     title="NewsPulse API",
     version="0.1.0",
     description="NewsPulse 新闻资讯平台后端服务",
+)
+#创建允许访问的域名列表
+origins = ["http://localhost:5173"]
+#添加中间件
+app.add_middleware(
+    
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
